@@ -15,32 +15,39 @@
 
 {% block primary_content_inner %}
 <section class="module issues-home">
-    <div class="header">
-      <h1 class="page-heading">
-        {{ _('Issues') }}
-        <div class="issues-actions">
-          {{ h.nav_link(_('New Issue'), named_route='issues_new', dataset_id=pkg.name, class_='btn btn-success') }}
-        </div>
-      </h1>
-   <div>
+  <div class="header">
+    <h1 class="page-heading">
+      {{ _('Issues') }}
+      <div class="issues-actions">
+        {{ h.nav_link(_('New Issue'), named_route='issues_new', dataset_id=pkg.name, class_='btn btn-success') }}
+      </div>
+    </h1>
+    <div>
       {% snippet 'snippets/search_form.html', type='issue', query=q, fields=(('page', pagination.page), ('per_page', pagination.per_page), ('status', status), ('visibility', visibility)), sorting=filters, sorting_selected=sort, placeholder=_('Search issues...'), no_bottom_border=true, no_title=true %}
       <h2 id="issues-found">
         {{ ungettext('{number} issue found', '{number} issues found', pagination.total_count) .format(number=pagination.total_count) }}
       </h2>
     </div>
-  {% if issues %}
-    <ul id="issue-list" class="issue-list-group list-group">
-      {% for issue in issues %}
-        {{ common.issue_item(issue, pkg, c.user) }}
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p class="empty">{{ _('No issues') }}</p>
-  {% endif %}
+    {% if issues %}
+      <ul id="issue-list" class="issue-list-group list-group">
+        {% for issue in issues %}
+          {{ common.issue_item(issue, pkg, c.user) }}
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty">{{ _('No issues') }}</p>
+    {% endif %}
   </div>
 
   {{ common.page_selector(pagination, issues_per_page, url_params={'dataset_id': pkg['id']}) }}
 </section>
+{% if h.issues_enabled_email_notifications() %}
+  <section class="module module-narrow">
+    <p>
+      Once an issue has been reported an administrator will be notified. Please check back for updates and resolutions.
+    </p>
+  </section>
+{% endif %}
 {% endblock %}
 
 {% block secondary_content %}
