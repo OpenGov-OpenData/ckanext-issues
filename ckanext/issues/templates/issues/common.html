@@ -26,7 +26,7 @@
           </li>
           <li>
             <i class="icon-comments"></i>
-            <a href="{{issue.ckan_url}}">
+            <a href="{{ h.url_for('issues_show', dataset_id=pkg.id, issue_number=issue.number) }}">
               {{ _('%s comments') % (issue.comment_count) }}
             </a>
           </li>
