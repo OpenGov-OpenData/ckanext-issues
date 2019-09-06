@@ -45,7 +45,7 @@
             </thead>
             <tbody>
             {% for issue in issues %}
-             {% set issue_url = issue.ckan_url %}
+             {% set issue_url = h.url_for('issues_show', dataset_id=issue.dataset_id, issue_number=issue.number) %}
               <tr class="{{'success' if issue.resolved else 'error'}}">
                 <td>
                   <a href="{{ issue_url }}">

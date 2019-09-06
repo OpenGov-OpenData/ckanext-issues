@@ -48,6 +48,8 @@ class IssuesPlugin(p.SingletonPlugin):
                 helpers.issues_user_is_owner,
             'issues_users_who_reported_issue':
                 helpers.issues_users_who_reported_issue,
+            'issues_enabled_email_notifications':
+                helpers.issues_enabled_email_notifications,
         }
 
     # IRoutes

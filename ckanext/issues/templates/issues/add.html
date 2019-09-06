@@ -28,8 +28,12 @@ set           {% for key, error in c.error_summary.items() %}
     {{ form.markdown('description', label=_('Description'), id='field-description', placeholder=_('Add a comment'), value=data.description, error=errors.description) }}
     {#{{ form.input('resource', label=_('Resource'), id='resource', attrs={'disabled':'1'}) }} ]#}
   {% endblock %}
-
   <div class="form-actions">
+    {% if h.issues_enabled_email_notifications() %}
+      <p class="action-info small">
+        Once an issue has been reported an administrator will be notified. Please check back for updates and resolutions.
+      </p>
+    {% endif %}
     {{ h.nav_link(_('Cancel'), controller='related', action='list', id=c.id,
     class_='btn') }}
     <button class="btn btn-primary" type="submit" name="save" tabindex="4">{{ _('Create') }}</button>

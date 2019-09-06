@@ -1,6 +1,9 @@
 from math import ceil
 
-from pylons import config
+try:
+    from ckan.common import config
+except ImportError:
+    from pylons import config
 
 from ckan import model
 from ckan.plugins import toolkit
@@ -222,3 +225,13 @@ def issues_user_is_owner(user, dataset_id):
         authorized = False
 
     return authorized
+
+def issues_enabled_email_notifications():
+    notifications = False
+    try:
+        notifications = toolkit.asbool(
+            config.get('ckanext.issues.send_email_notifications')
+        )
+    except (ValueError, KeyError):
+        return False
+    return notifications
